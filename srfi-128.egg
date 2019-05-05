@@ -13,4 +13,4 @@
   (extension
    srfi-128
    (types-file)
-   (csc-options "-O3" "-d2"))))
+   (csc-options "-keyword-style" "none" "-O3" "-d2"))))
