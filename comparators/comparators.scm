@@ -5,6 +5,15 @@
 (module srfi-128 ()
   (import scheme)
   (cond-expand
+   (chicken-6
+    (import (scheme base))
+    (import (scheme case-lambda))
+    (import (chicken base))
+    (import (chicken type))
+    (import (chicken module))
+    (import srfi-4)
+    ;; FIXME: why is string-hash redefined?
+    (import (except srfi-13 string-hash)))
    (chicken-5
     (import (chicken base))
     (import (chicken type))
@@ -39,7 +48,10 @@
   (define-type :hash-code: fixnum)
   (define-type :hash-function: (procedure (*) :hash-code:))
 
-  (include "comparators/r7rs-shim.scm")
+  (cond-expand
+    (chicken-6)
+    (else
+     (include "comparators/r7rs-shim.scm")))
   (include "comparators/comparators-impl.scm")
   (include "comparators/default.scm")
 
